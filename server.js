@@ -7,7 +7,6 @@ const app = express();
 // add this code
 
 // end
-app.use(cors(corsOptions));
 
 
 // Serve only the static files form the dist directory
