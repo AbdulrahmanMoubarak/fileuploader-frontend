@@ -7,12 +7,15 @@ import {Observable} from "rxjs";
 })
 export class UploadService {
 
-  private baseURL = 'http://localhost:8080/';
+  private baseURL = 'http://file-uploader-spring-app.herokuapp.com/';
 
   private httpHeaders = {
-    'Access-Control-Allow-Origin': '*/*',
+    'Access-Control-Allow-Origin': '*',
+    "Access-Control-Allow-Headers": "Origin, X-Requested, Content-Type, Accept Authorization",
+    "Access-Control-Allow-Methods": "POST, PUT, PATCH, GET, DELETE",
     'Access-Control-Allow-Credentials': 'true',
-
+    'Accept':"*/*",
+    "Content-Type": "multipart/form-data",
   };
   private httpOptions = {headers: new HttpHeaders(this.httpHeaders)};
 
