@@ -42,7 +42,7 @@
     "typescript": "~4.7.2"
   },
   "engines": {
-    "node": "12.18.2",
+    "node": "16.10",
     "npm": "6.14.5"
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.",
