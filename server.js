@@ -1,11 +1,11 @@
-const express = require('express');
+cconst express = require('express');
 const path = require('path');
 const cors = require('cors');
 
 const app = express();
 
 // add this code
-const whitelist = ['http://localhost:3000', 'https://file-uploader-spring-app.herokuapp.com']; // list of allow domain
+const whitelist = ['http://localhost:3000','https://file-uploader-spring-app.herokuapp.com']; // list of allow domain
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -21,7 +21,10 @@ const corsOptions = {
     return callback(null, true);
   }
 }
+
+// end
 app.use(cors(corsOptions));
+
 
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/fileuploader-frontend'));
