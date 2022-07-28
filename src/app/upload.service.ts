@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 })
 export class UploadService {
 
-  private baseURL = 'http://file-uploader-spring-app.herokuapp.com/';
+  private baseURL = 'https://file-uploader-spring-app.herokuapp.com/';
 
   private httpHeaders = {
     'Access-Control-Allow-Origin': '*',
