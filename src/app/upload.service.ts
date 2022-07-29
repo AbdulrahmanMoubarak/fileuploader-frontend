@@ -11,11 +11,10 @@ export class UploadService {
 
   private httpHeaders = {
     'Access-Control-Allow-Origin': '*',
-    "Access-Control-Allow-Headers": "Origin, X-Requested, Content-Type, Accept Authorization",
-    "Access-Control-Allow-Methods": "POST, PUT, PATCH, GET, DELETE",
-    'Access-Control-Allow-Credentials': 'true',
-    'Accept':"*/*",
-    "Content-Type": "multipart/form-data",
+    "Content-Type": 'multipart/form-data',
+    'reportProgress': 'true',
+    'responseType': 'json',
+    'observe': 'response',
   };
   private httpOptions = {headers: new HttpHeaders(this.httpHeaders)};
 
@@ -26,11 +25,7 @@ export class UploadService {
     console.log("Service Started")
     let formdata = new FormData();
     formdata.append("file", file)
-    return this.client.post<any>(this.baseURL + 'upload', formdata, {
-      reportProgress: true,
-      responseType: 'json',
-      observe: 'response'
-    });
+    return this.client.post<any>(this.baseURL + 'upload', formdata, this.httpOptions);
   }
 
   editMaxFileSize(mSize: string): Observable<HttpResponse<any>> {
