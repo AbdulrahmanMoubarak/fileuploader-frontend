@@ -22,7 +22,6 @@ export class UploadService {
     'reportProgress': 'true',
     'responseType': 'json',
     'observe': 'response',
-    'Content-Type': 'multipart/form-data'
   };
   private posthttpOptions = {headers: new HttpHeaders(this.posthttpHeaders)};
 
