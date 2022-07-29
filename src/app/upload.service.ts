@@ -11,7 +11,6 @@ export class UploadService {
 
   private httpHeaders = {
     'Access-Control-Allow-Origin': '*',
-    "Content-Type": 'multipart/form-data',
     'reportProgress': 'true',
     'responseType': 'json',
     'observe': 'response',
