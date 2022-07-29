@@ -26,15 +26,7 @@ export class UploadService {
     console.log("Service Started")
     let formdata = new FormData();
     formdata.append("file", file)
-    return this.client.post<any>(this.baseURL + 'upload', formdata, {
-      observe: 'response',
-      reportProgress: true,
-      'Access': "true",
-      'Access-Control-Allow-Origin': '*',
-      "Access-Control-Allow-Headers": "Origin, X-Requested, Content-Type, Accept Authorization",
-      "Access-Control-Allow-Methods": "POST, PUT, PATCH, GET, DELETE",
-      'Access-Control-Allow-Credentials': 'true',
-    });
+    return this.client.post<any>(this.baseURL + 'upload', formdata);
   }
 
   editMaxFileSize(mSize: string): Observable<HttpResponse<any>> {
