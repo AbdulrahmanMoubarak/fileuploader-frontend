@@ -26,7 +26,7 @@ export class UploadService {
     console.log("Service Started")
     let formdata = new FormData();
     formdata.append("file", file)
-    return this.client.post<any>(this.baseURL + 'upload', formdata, {observe: 'response'});
+    return this.client.post<any>(this.baseURL + 'upload', formdata, {observe: 'response', reportProgress: true});
   }
 
   editMaxFileSize(mSize: string): Observable<HttpResponse<any>> {
@@ -34,6 +34,6 @@ export class UploadService {
     console.log(this.baseURL+"setMaxSize")
     let formdata = new FormData();
     formdata.append("size", mSize)
-    return this.client.put<HttpResponse<any>>(this.baseURL + 'setMaxSize', formdata, this.httpOptions);
+    return this.client.put<HttpResponse<any>>(this.baseURL + 'setMaxSize', formdata);
   }
 }
