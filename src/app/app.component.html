@@ -1,13 +1,15 @@
+<head>
+  <script type="text/javascript" src="upload.js"></script>
+</head>
+<body>
 edit max file size <input type="text" #fileSize>
 <button (click)="editMaxSize($event, fileSize)">submit</button>
 <br/>
-<input #upFile type="file">
-<button (click)="uploadFile($event, upFile)">submit</button>
-
-<div *ngIf="showUpload" id="fileUpload">
-  <h3>Uploaded: {{progress}}%</h3>
-</div>
-
-<div *ngIf="showErr" id="fileUpload">
-  <h3>{{errMsg}}</h3>
-</div>
+<h2>HTML5 File Upload Progress Bar Tutorial</h2>
+<form id="upload_form" enctype="multipart/form-data" method="post">
+  <input type="file" name="file1" id="file1" onchange="uploadFile()"><br>
+  <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+  <h3 id="status"></h3>
+  <p id="loaded_n_total"></p>
+</form>
+</body>

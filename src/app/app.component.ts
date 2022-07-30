@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {UploadService} from "./upload.service";
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import {takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -18,32 +19,32 @@ export class AppComponent {
   progress = 0;
 
   uploadFile($event: MouseEvent, upFile: HTMLInputElement){
-      if (upFile.files != null) {
-        let file = upFile.files[0];
-        if(file.name.includes(".txt")) {
-          this.service.uploadFile(file).subscribe(
-            event => {
-              if (event.type === HttpEventType.UploadProgress) {
-                console.log("uploading")
-                this.showUpload = true;
-                this.progress = Math.round(100 * event.loaded / event.total);
-              } else if (event instanceof HttpResponse) {
-                console.log(event.status)
-                this.errMsg = event.body.message;
-              }
-            },
-            err => {
-              this.showErr = true;
-              this.showUpload = false;
-              this.progress = 0;
-              this.errMsg = 'Could not upload the file!';
-            }
-          );
-        } else{
-          this.showErr = true;
-          this.errMsg = "Only accepts text files";
-        }
-      }
+      // if (upFile.files != null) {
+      //   let file = upFile.files[0];
+      //   if(file.name.includes(".txt")) {
+      //     this.service.uploadFile(file).pipe(takeUntil(file.ngUnsubscribe))
+      //       .subscribe(
+      //         (res: any) => {
+      //           if (res.status === 'progress') {
+      //             let completedPercentage = parseFloat(res.message);
+      //             this.progress = (
+      //               (file.size * completedPercentage) /
+      //               100
+      //             )
+      //           } else if (res.status === 'completed') {
+      //
+      //           }
+      //         },
+      //         (error: any) => {
+      //           console.log('file upload error');
+      //           console.log(error);
+      //         }
+      //       );
+      //   } else{
+      //     this.showErr = true;
+      //     this.errMsg = "Only accepts text files";
+      //   }
+      // }
   }
 
 
