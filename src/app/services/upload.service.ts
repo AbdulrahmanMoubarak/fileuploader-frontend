@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import {map, Observable} from "rxjs";
+import {HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
 
-  private baseURL = 'https://file-uploader-spring-app.herokuapp.com/';
+  //private baseURL = 'https://file-uploader-spring-app.herokuapp.com/';
+  private baseURL = 'http://localhost:5002/';
 
   private puthttpHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -30,23 +31,28 @@ export class UploadService {
   }
 
   uploadFile(file: File) {
-    // console.log("Service Started")
-    // let formdata = new FormData();
-    // formdata.append("file", file)
-    // return this.client.post(this.baseURL + 'upload', formdata, this.posthttpOptions).pipe(
-    //   map((event) => {
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         const progress = Math.round((100 * event.loaded) / event.total);
-    //         return { status: 'progress', message: progress };
-    //
-    //       case HttpEventType.Response:
-    //         return event.body;
-    //       default:
-    //         return `Unhandled event: ${event.type}`;
-    //     }
-    //   })
-    // );
+    console.log("Service Started")
+    let formdata = new FormData();
+    formdata.append("file", file)
+    return this.client.post(this.baseURL + 'upload', formdata, {
+      reportProgress: true,
+      observe: 'events',
+    }).pipe(catchError(this.errorMgmt));
+  }
+
+  private errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(() => {
+      return errorMessage;
+    });
   }
 
   editMaxFileSize(mSize: string): Observable<HttpResponse<any>> {

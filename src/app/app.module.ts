@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {UploadService} from "./upload.service";
+import {UploadService} from "./services/upload.service";
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
+import {FileTicketService} from "./services/file-ticket.service";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [UploadService],
+  providers: [UploadService, FileTicketService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
