@@ -38,23 +38,10 @@ export class UploadService {
     return this.client.post(this.baseURL + 'upload', formdata, {
       reportProgress: true,
       observe: 'events',
-    }).pipe(catchError(this.errorMgmt));
-  }
-
-  private errorMgmt(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => {
-      return errorMessage;
     });
   }
+
+
 
   editMaxFileSize(mSize: string): Observable<HttpResponse<any>> {
     console.log("Service started");

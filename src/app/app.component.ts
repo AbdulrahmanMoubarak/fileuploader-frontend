@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {UploadService} from "./services/upload.service";
-import {HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
 import {FileTicketService} from "./services/file-ticket.service";
 import {SystemTicketModel} from "./models/system-ticket-model";
+import {catchError, throwError} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -33,7 +34,9 @@ export class AppComponent {
       let file = upFile.files[0];
       if (file.name.includes(".txt")) {
         try {
-          this.fileService.uploadFile(file, this.ticketId).subscribe((event: HttpEvent<any>) => {
+          this.fileService.uploadFile(file, this.ticketId).pipe(
+            catchError(this.errorMgmt)
+          ).subscribe((event: HttpEvent<any>) => {
             switch (event.type) {
               case HttpEventType.Sent:
                 console.log('Request has been made!');
@@ -97,5 +100,26 @@ export class AppComponent {
         this.ticketId = response.ticketId;
       });
     }
+  }
+
+  private errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      this.showBtn = false;
+      this.showErr = true;
+      this.showUpload = false
+      this.errMsg = error.error.message;
+    } else {
+      // Get server-side error
+      this.showBtn = false;
+      this.showErr = true;
+      this.showUpload = false
+      this.errMsg = `Error: Ticket expired. Please try again`;
+    }
+    console.log(errorMessage);
+    return throwError(() => {
+      return errorMessage;
+    });
   }
 }
