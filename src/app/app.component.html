@@ -3,7 +3,7 @@
 </head>
 <body>
 edit max file size <input type="text" #fileSize value="50">
-<button (click)="editMaxSize($event, fileSize)">submit</button>
+<button (click)="editMaxSize($event, fileSize, fileSelector)">submit</button>
 <br/>
 <form id="upload_form" >
   <input #fileSelector type="file" (change)="validateFile($event, fileSelector)"><br>
