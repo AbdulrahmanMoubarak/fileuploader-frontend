@@ -20,14 +20,22 @@ export class FileTicketService {
   constructor(private client: HttpClient) {
   }
 
-  getTicket(filename: string, filesize: number, userId: number): Observable<SystemTicketModel> {
+  getTicket(filename: string, filesize: number, userId: string): Observable<SystemTicketModel> {
     let formdata = new FormData();
-    let metadata = new TicketMetadata(userId, filename, filesize);
-    formdata.append("userId",String(userId));
+    formdata.append("userId",userId);
     formdata.append("fileName",filename);
     formdata.append("fileSize",String(filesize));
     return this.client.post<SystemTicketModel>(this.baseURL + 'requestTicket', formdata,{
       headers: this.httpHeaders,
     });
+  }
+
+  activateTicket(ticketId: number){
+    console.log("ticket activation requested");
+    let formdata = new FormData();
+    formdata.append("ticketId",String(ticketId));
+    return this.client.put(this.baseURL+"activateTicket", formdata, {
+      headers: this.httpHeaders,
+    }).subscribe();
   }
 }

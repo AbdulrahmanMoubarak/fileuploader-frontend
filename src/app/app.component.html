@@ -2,11 +2,13 @@
   <title>File Uploader</title>
 </head>
 <body>
+User ID <input type="text" #userId value="0">
+<br/>
 edit max file size <input type="text" #fileSize value="50">
 <button (click)="editMaxSize($event, fileSize, fileSelector)">submit</button>
 <br/>
 <form id="upload_form" >
-  <input #fileSelector type="file" (change)="validateFile($event, fileSelector)"><br>
+  <input #fileSelector type="file" (change)="validateFile($event, fileSelector, userId)"><br>
   <div *ngIf="showBtn">
     <button (click)="uploadFile($event, fileSelector)">Upload</button>
   </div>

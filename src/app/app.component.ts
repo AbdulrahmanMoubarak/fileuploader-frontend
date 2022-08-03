@@ -34,9 +34,8 @@ export class AppComponent {
       let file = upFile.files[0];
       if (file.name.includes(".txt")) {
         try {
-          this.fileService.uploadFile(file, this.ticketId).pipe(
-            catchError(this.errorMgmt)
-          ).subscribe((event: HttpEvent<any>) => {
+          this.ticketService.activateTicket(this.ticketId);
+          this.fileService.uploadFile(file, this.ticketId).subscribe((event: HttpEvent<any>) => {
             switch (event.type) {
               case HttpEventType.Sent:
                 console.log('Request has been made!');
@@ -53,6 +52,8 @@ export class AppComponent {
               case HttpEventType.Response:
                 this.showErr = true;
                 this.showUpload = false;
+                this.showBtn = false
+                upFile.value = "";
                 this.errMsg = "File Uploaded!"
                 console.log('File successfully uploaded', event.body);
                 setTimeout(() => {
@@ -88,11 +89,11 @@ export class AppComponent {
     }
   }
 
-  validateFile($event: Event, upFile: HTMLInputElement) {
+  validateFile($event: Event, upFile: HTMLInputElement, userId: HTMLInputElement) {
     this.showBtn = false;
     if (upFile.files != null) {
       let file = upFile.files[0];
-      this.ticketService.getTicket(file.name, file.size, 3).subscribe((response: SystemTicketModel) => {
+      this.ticketService.getTicket(file.name, file.size, userId.value).subscribe((response: SystemTicketModel) => {
         console.log("ticket id: " + response.ticketId)
         console.log("file name:" + response.fileName)
         console.log("ticket size:" + response.size)
