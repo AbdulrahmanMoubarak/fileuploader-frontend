@@ -30,11 +30,12 @@ export class UploadService {
   constructor(private client: HttpClient) {
   }
 
-  uploadFile(file: File, ticketId: number) {
+  uploadFile(file: File, ticketId: number, checksum: string) {
     console.log("Service Started")
     let formdata = new FormData();
     formdata.append("file", file)
     formdata.append("ticketId", String(ticketId));
+    formdata.append("checksum", checksum);
     return this.client.post(this.baseURL + 'upload', formdata, {
       reportProgress: true,
       observe: 'events',
